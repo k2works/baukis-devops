@@ -1,0 +1,103 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "data",
+      "host": {
+        "sourcePath": "/var/data"
+      }
+    },
+    {
+     "name": "app",
+     "host": {
+       "sourcePath": "/var/app/current/rails-app"
+     }
+   },
+   {
+     "name": "nginx-proxy-conf",
+     "host": {
+       "sourcePath": "/var/app/current/ops/staging/docker/container/proxy/conf.d"
+     }
+   },
+   {
+     "name": "awseb-logs-nginx-proxy",
+     "host": {
+       "sourcePath": "/var/log/proxy"
+     }
+   }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "db",
+      "image": "k2works/baukis-devops-db:latest",
+      "environment": [
+        {
+          "name": "Container",
+          "value": "MySQL"
+        }
+      ],
+      "essential": true,
+      "memory": 512,
+      "mountPoints": [
+        {
+          "sourceVolume": "data",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    },
+    {
+      "name": "app",
+      "image": "k2works/baukis-devops-app:latest",
+      "environment": [
+        {
+          "name": "Container",
+          "value": "Ruby on Rails"
+        }
+      ],
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 3000,
+          "containerPort": 3000
+        }
+      ],
+      "links": [
+        "db"
+      ],
+      "mountPoints": []
+    },
+    {
+      "name": "proxy",
+      "image": "k2works/baukis-devops-proxy:latest",
+      "environment": [
+        {
+          "name": "Container",
+          "value": "Nginx proxy"
+        }
+      ],
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "app"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "nginx-proxy-conf",
+          "containerPath": "/etc/nginx/conf.d",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "awseb-logs-nginx-proxy",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
+    }
+  ]
+}

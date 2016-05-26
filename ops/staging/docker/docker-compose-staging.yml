@@ -19,7 +19,7 @@ services:
     volumes:
       - ./ops/staging/docker/container/app/config/secrets.yml:/usr/src/app/config/secrets.yml
       - ./ops/staging/docker/container/app/config/database.yml:/usr/src/app/config/database.yml
-      - ./ops/staging/docker/container/app/config/environments/staging.rb:/usr/src/app/config/environments/staging.rb
+      - ./ops/staging/docker/container/app/config/environments/staging.rb:/usr/src/app/config/staging.rb
       - ./log/:/usr/src/app/log/
   proxy:
     image: k2works/baukis-devops-proxy:latest
