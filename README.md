@@ -443,20 +443,30 @@ $ cp ./ops/development/docker/Dockerfile .
 $ cp ./ops/development/docker/docker-compose-development.yml docker-compose.yml
 ```
 
+###### Gemパッケージのインストール
+`Gemfile`を編集後にパッケージのインストールを再実行する
+```
+$ cd /vagrant
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle update coffee-rails
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle install
+$ docker-compose build
+```
+
+##### Spring
+```
+$ docker-compose run app bundle exec spring binstub rspec
+$ docker-compose run app bundle exec spring status
+$ docker-compose run app bundle exec spring stop
+```
+
+
+
 開発環境の実行
 ```
 $ docker-compose run app rake db:create
 $ docker-compose up
 ```
 `http://127.0.0.1:8080/`で動作を確認する
-
-###### Gemパッケージのインストール
-`Gemfile`を編集後にパッケージのインストールを再実行する
-```
-$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle update coffee-rails
-$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle install
-$ docker-compose build
-```
 
 ## 運用
 ### ステージング環境の運用
