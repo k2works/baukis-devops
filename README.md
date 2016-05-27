@@ -279,6 +279,156 @@ $ exit
 `http://staging-baukis.ap-northeast-1.elasticbeanstalk.com/`で動作を確認する
 
 ### 本番環境の構築
+#### パラメータ
+| 変数名                  | 値           | 備考         |
+|:-----------------------|:-------------|:------------|
+| AWS Access Key ID      | xxxxxxxxxxxxxxx                       | aws-cliで設定     |
+| AWS Secret Access Key  | xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  | aws-cliで設定     |
+| Default region name    | ap-northeast-1                             | aws-cliで設定     |
+| Default output format  | json                                       | aws-cliで設定     |
+
+以下`#{xxxx}`表記はパラメータの変数を参照すること
+なお、AWSシークレットアクセスキーは各自のアカウント情報で取得したものを使う
+
+#### AWS設定
+```
+$ vagrant up
+$ vagrant ssh
+$ cd /vagrant
+```
+
+```
+$ aws configure
+ AWS Access Key ID [None]: #{AWS Access Key ID}
+ AWS Secret Access Key [None]: #{AWS Secret Access Key}
+ Default region name [None]: #{Default region name}
+ Default output format [None]: #{Default output format}
+$ aws ec2 describe-regions --output table
+  ----------------------------------------------------------
+  |                     DescribeRegions                    |
+  +--------------------------------------------------------+
+  ||                        Regions                       ||
+  |+-----------------------------------+------------------+|
+  ||             Endpoint              |   RegionName     ||
+  |+-----------------------------------+------------------+|
+  ||  ec2.eu-west-1.amazonaws.com      |  eu-west-1       ||
+  ||  ec2.ap-southeast-1.amazonaws.com |  ap-southeast-1  ||
+  ||  ec2.ap-southeast-2.amazonaws.com |  ap-southeast-2  ||
+  ||  ec2.eu-central-1.amazonaws.com   |  eu-central-1    ||
+  ||  ec2.ap-northeast-2.amazonaws.com |  ap-northeast-2  ||
+  ||  ec2.ap-northeast-1.amazonaws.com |  ap-northeast-1  ||
+  ||  ec2.us-east-1.amazonaws.com      |  us-east-1       ||
+  ||  ec2.sa-east-1.amazonaws.com      |  sa-east-1       ||
+  ||  ec2.us-west-1.amazonaws.com      |  us-west-1       ||
+  ||  ec2.us-west-2.amazonaws.com      |  us-west-2       ||
+  |+-----------------------------------+------------------+|
+```
+
+VPCの作成
+```
+$ cd /vagrant/ops/production/aws/
+$ aws cloudformation validate-template --template-body file://vpc/vpc-2az-2subnet-pub.template
+$ chmod 0755 ./vpc-create-stack.sh
+$ ./vpc-create-stack.sh
+$ aws cloudformation list-stack-resources --stack-name Baukis-devops-production-VPC --output table
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+||                                                                    StackResourceSummaries                                                                    ||
+|+--------------------------+-----------------------------------------+----------------------------+------------------+-----------------------------------------+|
+||   LastUpdatedTimestamp   |            LogicalResourceId            |    PhysicalResourceId      | ResourceStatus   |              ResourceType               ||
+|+--------------------------+-----------------------------------------+----------------------------+------------------+-----------------------------------------+|
+||  2016-05-27T02:08:48.212Z|  GatewayToInternet                      |  Bauki-Gatew-UVKCQJQULK0Q  |  CREATE_COMPLETE |  AWS::EC2::VPCGatewayAttachment         ||
+||  2016-05-27T02:08:53.934Z|  InboundEphemeralPublicNetworkAclEntry  |  Bauki-Inbou-1LAS5ZWB7BPSD |  CREATE_COMPLETE |  AWS::EC2::NetworkAclEntry              ||
+||  2016-05-27T02:08:54.226Z|  InboundHTTPPublicNetworkAclEntry       |  Bauki-Inbou-1J026C8XFFGAC |  CREATE_COMPLETE |  AWS::EC2::NetworkAclEntry              ||
+||  2016-05-27T02:08:54.106Z|  InboundHTTPSPublicNetworkAclEntry      |  Bauki-Inbou-1DZR1P3VQZKKV |  CREATE_COMPLETE |  AWS::EC2::NetworkAclEntry              ||
+||  2016-05-27T02:08:53.918Z|  InboundSSHPublicNetworkAclEntry        |  Bauki-Inbou-1CLC3U0FRSO3W |  CREATE_COMPLETE |  AWS::EC2::NetworkAclEntry              ||
+||  2016-05-27T02:08:27.435Z|  InternetGateway                        |  igw-dde470b8              |  CREATE_COMPLETE |  AWS::EC2::InternetGateway              ||
+||  2016-05-27T02:08:54.035Z|  OutboundPublicNetworkAclEntry          |  Bauki-Outbo-17VW9Q3MH3UHJ |  CREATE_COMPLETE |  AWS::EC2::NetworkAclEntry              ||
+||  2016-05-27T02:08:34.109Z|  PublicNetworkAcl                       |  acl-50585235              |  CREATE_COMPLETE |  AWS::EC2::NetworkAcl                   ||
+||  2016-05-27T02:09:08.241Z|  PublicRoute                            |  Bauki-Publi-1DB7UMKX55PTD |  CREATE_COMPLETE |  AWS::EC2::Route                        ||
+||  2016-05-27T02:08:34.676Z|  PublicRouteTable                       |  rtb-f82e3c9d              |  CREATE_COMPLETE |  AWS::EC2::RouteTable                   ||
+||  2016-05-27T02:08:49.119Z|  PublicSubnet1a                         |  subnet-ed20329a           |  CREATE_COMPLETE |  AWS::EC2::Subnet                       ||
+||  2016-05-27T02:08:49.153Z|  PublicSubnet1c                         |  subnet-57ffd70e           |  CREATE_COMPLETE |  AWS::EC2::Subnet                       ||
+||  2016-05-27T02:09:08.744Z|  PublicSubnetNetworkAclAssociation1a    |  aclassoc-608b5807         |  CREATE_COMPLETE |  AWS::EC2::SubnetNetworkAclAssociation  ||
+||  2016-05-27T02:09:09.400Z|  PublicSubnetNetworkAclAssociation1c    |  aclassoc-618b5806         |  CREATE_COMPLETE |  AWS::EC2::SubnetNetworkAclAssociation  ||
+||  2016-05-27T02:09:08.424Z|  PublicSubnetRouteTableAssociation1a    |  rtbassoc-c1a57ba5         |  CREATE_COMPLETE |  AWS::EC2::SubnetRouteTableAssociation  ||
+||  2016-05-27T02:09:08.455Z|  PublicSubnetRouteTableAssociation1c    |  rtbassoc-c2a57ba6         |  CREATE_COMPLETE |  AWS::EC2::SubnetRouteTableAssociation  ||
+||  2016-05-27T02:08:28.832Z|  VPC                                    |  vpc-1f133a7a              |  CREATE_COMPLETE |  AWS::EC2::VPC                          ||
+|+--------------------------+-----------------------------------------+----------------------------+------------------+-----------------------------------------+|
+```
+
+#### 本番環境のビルド(ローカル)
+```
+$ cd /vagrant/ops/production/docker/
+$ docker-compose build
+$ cd /vagrant
+$ cp ./ops/production/docker/Dockerfile .
+$ cp ./ops/production/docker/docker-compose-production.yml ./docker-compose.yml
+$ docker-compose build
+```
+
+#### 本番環境の実行(ローカル)
+```
+$ docker-compose run app mysql -hdb -uroot -ppassword -e "GRANT ALL ON ebdb.* TO app@'%' IDENTIFIED BY 'password';"
+$ docker-compose run app rake db:create
+$ docker-compose up
+```
+`http://127.0.0.1:8080/`で動作を確認する
+
+#### 本番環境のビルド(リモート)
+レポジトリをプッシュする
+```
+$ docker login
+$ docker push k2works/baukis-devops-app:latest
+$ docker push k2works/baukis-devops-db:latest
+$ docker push k2works/baukis-devops-proxy:latest
+```
+
+VPC情報を確認して変数にセットする
+```
+$ aws cloudformation describe-stacks --stack-name Baukis-devops-production-VPC --query 'Stacks[].Outputs[]' --output table
+-----------------------------------------------------------
+|                     DescribeStacks                      |
++------------------------+------------+-------------------+
+|       Description      | OutputKey  |    OutputValue    |
++------------------------+------------+-------------------+
+|  VPC ID                |  VPCID     |  vpc-1f133a7a     |
+|  PublicSubnet for ELB  |  ELBSUBNET |  subnet-ed20329a  |
+|  PublicSubnet for EC2  |  EC2SUBNET |  subnet-ed20329a  |
+|  PrivateSubnet for RDS |  DBSUBNET1 |  subnet-ed20329a  |
+|  PrivateSubnet for RDS |  DBSUBNET2 |  subnet-57ffd70e  |
+$ vi ./ops/staging/aws/eb-create-vpc-rds-env.sh
+```
+パーミッションを実行可能にする
+```
+$ chmod 0755 ./ops/production/aws/eb-create-vpc-rds-env.sh
+$ chmod 0755 ./ops/production/aws/eb-setenv-production.sh
+```
+
+作成したアプリケーションにデプロイスクリプトを実行する
+```
+$ ./ops/production/aws/eb-create-vpc-rds-env.sh
+$ eb use production-env
+$ ./ops/production/aws/eb-setenv-production.sh
+$ eb printenv
+ Environment Variables:
+     APP_DATABASE_PASSWORD = password
+     RAILS_ENV = production
+     SECRET_KEY_BASE = 483439d1ec14f14bda2236b659b6e0eb6091e81ab15fb7a156b3098e3d6daafa6b7f4aa19083e0b29bcf865f0a81e76ea833001c811694b50152f3e3ef91bb5d
+```
+
+#### 本番環境の実行(リモート)
+```
+$ eb ssh
+$ $ sudo docker ps
+  CONTAINER ID        IMAGE                                COMMAND                  CREATED              STATUS              PORTS                         NAMES
+  7a018c225cd8        k2works/baukis-devops-proxy:latest   "nginx -g 'daemon off"   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp, 443/tcp   ecs-awseb-production-env-46pze42ppq-2-proxy-decb858df380ffbea101
+  4343c23036f9        k2works/baukis-devops-app:latest     "rails server -b 0.0."   About a minute ago   Up About a minute   0.0.0.0:3000->3000/tcp        ecs-awseb-production-env-46pze42ppq-2-app-a2c8b68692c3a5ab3400
+  b1b9d81bcd8e        k2works/baukis-devops-db:latest      "docker-entrypoint.sh"   About a minute ago   Up About a minute   3306/tcp                      ecs-awseb-production-env-46pze42ppq-2-db-d0dca892859cdfa0b701
+  505eee3df14a        amazon/amazon-ecs-agent:latest       "/agent"                 14 minutes ago       Up 14 minutes       127.0.0.1:51678->51678/tcp    ecs-agent
+$ exit
+```
+`http://baukis.ap-northeast-1.elasticbeanstalk.com/`で動作を確認する
+
 ## 開発
 ### アプリケーションの開発
 ## 運用
