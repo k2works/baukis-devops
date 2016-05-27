@@ -486,6 +486,36 @@ $ docker-compose run app bundle exec rails g rspec:install
 $ docker-compose run app bundle exec rspec
 ```
 
+#### ビジュアルデザイン
+##### 架設トップページの作成
++ ルーテイングの設定
++ コントローラとアクションの作成
+```
+$ docker-compose run app bundle exec rails g controller staff/top
+$ docker-compose run app bundle exec rails g controller admin/top
+$ docker-compose run app bundle exec rails g controller customer/top
+```
++ ERBテンプレートの作成
+  - [http://127.0.0.1:3000/staff](http://127.0.0.1:3000/staff)
+  - [http://127.0.0.1:3000/admin](http://127.0.0.1:3000/admin)
+  - [http://127.0.0.1:3000/customer](http://127.0.0.1:3000/customer)
++ レイアウト
++ 部分テンプレート
++ ヘルパーメソッドの定義
+
+##### Sass/SCSS
++ アセットパイプライン
++ スタイルシートの切り替え
++ ヘッダとフッタのスタイル
++ 見出し(h1要素)のスタイル
++ 色を変数で表現する
++ 寸法を変数で表現する
++ アセットのプリコンパイル
+```
+$ docker-compose run app bundle exec rake db:create RAILS_ENV=production
+$ docker-compose run app bundle exec rake assets:precompile
+```
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
