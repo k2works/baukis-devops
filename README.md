@@ -479,6 +479,13 @@ $ sudo sh -c "echo '127.0.0.1 baukis.example.com' >> /etc/hosts"
 $ sudo sh -c "echo '127.0.0.1 example.com' >> /etc/hosts"
 ```
 
+#### RSpec
+##### RSpecの初期設定
+```
+$ docker-compose run app bundle exec rails g rspec:install
+$ docker-compose run app bundle exec rspec
+```
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
