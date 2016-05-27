@@ -459,14 +459,15 @@ $ docker-compose run app bundle exec spring status
 $ docker-compose run app bundle exec spring stop
 ```
 
-
-
-開発環境の実行
+##### データベースのセットアップ
 ```
 $ docker-compose run app rake db:create
+$ docker-compose run app rake db:create RAILS_ENV=test
 $ docker-compose up
 ```
-`http://127.0.0.1:8080/`で動作を確認する
+`http://127.0.0.1:3000/`で動作を確認する
+終了する場合は`Ctl-c`で終了
+
 
 ## 運用
 ### ステージング環境の運用
