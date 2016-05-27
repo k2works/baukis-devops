@@ -468,6 +468,16 @@ $ docker-compose up
 `http://127.0.0.1:3000/`で動作を確認する
 終了する場合は`Ctl-c`で終了
 
+##### その他の準備作業
++ ライセンス文書の作成
++ タイムゾーンとロケールの設定
++ ジェネレータの設定
+
+hostsファイルの設定
+```
+$ sudo sh -c "echo '127.0.0.1 baukis.example.com' >> /etc/hosts"
+$ sudo sh -c "echo '127.0.0.1 example.com' >> /etc/hosts"
+```
 
 ## 運用
 ### ステージング環境の運用
