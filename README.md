@@ -516,6 +516,24 @@ $ docker-compose run app bundle exec rake db:create RAILS_ENV=production
 $ docker-compose run app bundle exec rake assets:precompile
 ```
 
+#### エラーページ
+##### 500 Internal Server Error
++ 準備作業
++ 例外の補足
++ ビジュアルデザイン
+##### 403 Forbidden
++ 例外の補足
++ ERBテンプレートの作成
++ 動作確認
+##### 404 Not Found
++ 例外ActionController::RoutingErrorの処理
+```
+$ docker-compose run app bundle exec rails g controller errors
+```
++ 例外ActiveRecord::RecordNotFoundの処理
+##### ActiveSupport::Concern
+
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
