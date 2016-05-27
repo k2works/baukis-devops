@@ -432,7 +432,59 @@ $ exit
 ## 開発
 ### アプリケーションの開発
 ## 運用
+### ステージング環境の運用
+#### 環境を終了する
+```
+$ eb use staging-env
+$ eb terminate staging-env
+ The environment "staging-env" and all associated instances will be terminated.
+ To confirm, type the environment name: staging-env
+$ aws cloudformation delete-stack --stack-name Baukis-devops-IAM
+$ aws cloudformation delete-stack --stack-name Baukis-devops-VPC
+```
+### 本番環境の運用
+#### 環境を終了する
+```
+$ eb use production-env
+$ eb terminate production-env
+ The environment "production-env" and all associated instances will be terminated.
+ To confirm, type the environment name: production-env
+$ aws cloudformation delete-stack --stack-name Baukis-devops-production-IAM
+$ aws cloudformation delete-stack --stack-name Baukis-devops-production-VPC
+$ aws rds describe-db-snapshots --query 'DBSnapshots[].DBSnapshotIdentifier[]' --output table
+---------------------------------------------------------------------
+|                        DescribeDBSnapshots                        |
++-------------------------------------------------------------------+
+|  awseb-e-46pze42ppq-stack-snapshot-awsebrdsdatabase-voezmmtc745k  |
++-------------------------------------------------------------------+
+$ aws rds delete-db-snapshot --db-snapshot-identifier awseb-e-46pze42ppq-stack-snapshot-awsebrdsdatabase-voezmmtc745k
+```
 ### アプリケーションの運用
+#### アプリケーションを終了する
+```
+$ eb terminate --all
+
+ The application "baukis-devops" and all its resources will be deleted.
+ This application currently has the following:
+ Running environments: 0
+ Configuration templates: 0
+ Application versions: 9
+
+ To confirm, type the application name: baukis-devops
+ Removing application versions from s3.
+ INFO: deleteApplication is starting.
+ INFO: No environment needs to be terminated.
+ INFO: The environment termination step is done.
+ INFO: The application has been deleted successfully.
+```
+#### 開発環境を終了する
+```
+$ exit
+$ vagrant destroy
+    default: Are you sure you want to destroy the 'default' VM? [y/N] y
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+```
 ## 参照
 
 # 参照

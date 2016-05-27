@@ -87,7 +87,3 @@ crashlytics-build.properties
 fabric.properties
 ### Vagrant template
 .vagrant/
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
