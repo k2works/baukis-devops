@@ -431,6 +431,25 @@ $ exit
 
 ## 開発
 ### アプリケーションの開発
+#### 開発プロジェクト始動
+##### 新規Railsアプリケーションの作成
+```
+$ vagrant up
+$ vgarnt ssh
+$ cd /vagrant/ops/development/docker/
+$ docker-compose build
+$ cd /vagrant
+$ cp ./ops/development/docker/Dockerfile .
+$ cp ./ops/development/docker/docker-compose-development.yml docker-compose.yml
+```
+
+開発環境の実行
+```
+$ docker-compose run app rake db:create
+$ docker-compose up
+```
+`http://127.0.0.1:8080/`で動作を確認する
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する

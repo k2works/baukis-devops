@@ -14,8 +14,11 @@ services:
     environment:
       - RAILS_ENV=development
     volumes:
+      - .:/usr/src/app
       - ./ops/development/docker/container/app/config/secrets.yml:/usr/src/app/config/secrets.yml
       - ./ops/development/docker/container/app/config/database.yml:/usr/src/app/config/database.yml
+    ports:
+      - "3000:3000"
   proxy:
     image: proxy:development
     volumes:
