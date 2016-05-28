@@ -533,6 +533,49 @@ $ docker-compose run app bundle exec rails g controller errors
 + 例外ActiveRecord::RecordNotFoundの処理
 ##### ActiveSupport::Concern
 
+#### ユーザー認証
+##### マイグレーション
++ 各種スケルトンの作成
++ マイグレーションスクリプト
++ マイグレーションの実行
+```
+$ docker-compose run app bundle exec rails g model StaffMember
+$ docker-compose run app bundle exec rake db:migrate
+$ docker-compose run app bundle exec rake db:reset
+```
++ 主キー
+```
+$ docker-compose run app rails r 'StaffMember.columns.each { |c| p [ c.name, c.type ] }'
+```
+
+##### モデル
++ モデルの基礎知識
++ 検索用メールアドレス
++ ハッシュ関数
+```
+$ docker-compose run app bin/rspec spec/models/staff_member_spec.rb
+```
++ シードデータの投入
+```
+$ docker-compose run app bin/rake db:seed
+$ docker-compose run app bin/rake db:reset
+$ docker-compose run app bin/rails r 'puts StaffMember.count'
+$ docker-compose run app bin/rails r 'puts StaffMember.first.hashed_password'
+```
+##### セッション
++ セッションとは
++ current_staff_memberメソッドの定義
++ ルーテイングの決定
++ リンクの設置
+```
+$ mkdir app/views/staff/shared
+$ mkdir app/views/admin/shared
+$ mkdir app/views/customer/shared
+$ cp app/views/shared/_header.html.erb app/views/staff/shared/
+$ cp app/views/shared/_header.html.erb app/views/admin/shared/
+$ cp app/views/shared/_header.html.erb app/views/customer/shared/
+$ rm app/views/shared/_header.html.erb
+```
 
 ## 運用
 ### ステージング環境の運用
