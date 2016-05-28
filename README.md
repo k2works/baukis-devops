@@ -623,6 +623,17 @@ $ docker-compose run app bin/rspec spec/services/staff/authenticator_spec.rb
 $ mkdir spec/routing
 ```
 
+#### 管理者による職員アカウント管理機能（前編）
+##### 準備作業
+```
+$ docker-compose run app bin/rails g controller admin/staff_members
+$ docker-compose run app bin/rake db:reset
+```
+##### indexアクション
+##### showアクション
+##### newアクション
+##### editアクション
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
