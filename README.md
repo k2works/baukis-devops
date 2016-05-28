@@ -605,6 +605,24 @@ $ docker-compose run app bin/rspec spec/services/staff/authenticator_spec.rb
 + フラッシュへの書き込み
 + メッセージの表示
 
+#### ルーテイングの基礎知識
+##### アクション単位のルーテイング
+##### 名前空間
+#### リソースベースのルーテイング
+##### ルーティングの分類
+##### resourcesメソッド
+#### 単数リソース
+##### 単数リソースの６つの基本アクション
+##### resourceメソッド
+##### resourceメソッドのオプション
+#### 制約
+##### Rails.application.config
+##### ホスト名による制約
+##### ルーテイングのテスト
+```
+$ mkdir spec/routing
+```
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
