@@ -576,6 +576,34 @@ $ cp app/views/shared/_header.html.erb app/views/admin/shared/
 $ cp app/views/shared/_header.html.erb app/views/customer/shared/
 $ rm app/views/shared/_header.html.erb
 ```
+##### フォームオブジェクト
++ フォームの基礎知識
++ フォームオブジェクトとは
+```
+$ mkdir -p app/forms/staff
+```
++ ログインフォームの作成
+```
+$ docker-compose run app bin/rails g controller staff/sessions
+```
++ paramsオブジェクト
++ ログアウト機能の実装
++ スタイルシートの作成
+
+##### サービスオブジェクト
++ Staff::Authenticatorクラス
+```
+$ mkdir -p app/services/staff
+```
++ サービスオブジェクトのspecファイル
+```
+$ mkdir spec/factories
+$ mkdir -p spec/services/staff
+$ docker-compose run app bin/rspec spec/services/staff/authenticator_spec.rb
+```
+##### ログイン・ログアウト後のメッセージ表示
++ フラッシュへの書き込み
++ メッセージの表示
 
 ## 運用
 ### ステージング環境の運用
