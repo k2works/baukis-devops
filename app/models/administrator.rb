@@ -1,4 +1,4 @@
-class StaffMember < ActiveRecord::Base
+class Administrator < ActiveRecord::Base
   before_validation do
     self.email_for_index = email.downcase if email
   end
