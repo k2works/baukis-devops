@@ -18,7 +18,16 @@ class Staff::SessionsController < Staff::Base
       flash.notice = 'ログインしました'
       redirect_to :staff_root
     else
-      flash.now.alert = 'メールアドレスまたはパスワードが正しくありません。'
+      if staff_member.nil?
+        msg = 'アカウントが未登録です。'
+      else
+        if staff_member.suspended?
+          msg = 'アカウントが停止されています。'
+        else
+          msg = 'メールアドレスまたはパスワードが正しくありません。'
+        end
+      end
+      flash.now.alert = msg
       render action: 'new'
     end
   end
