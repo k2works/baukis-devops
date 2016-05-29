@@ -683,8 +683,31 @@ $ touch spec/controllers/staff/accounts_controller_spec.rb
 ```
 $ docker-compose run app bin/rspec spec/controllers/staff/accounts_controller_spec.rb
 ```
+#### before_action
+##### 管理者ページのアクセス制御
+##### before_actionの継承
+##### 職員ページのアクセス制御
 
-
+#### アクセス制御の強化
+##### 強制的ログアウト
+##### セッションタイムアウト
+#### アクセス制御のテスト
+##### 失敗するエグザンプルの修正
+```
+$ docker-compose run app bin/rspec spec/
+```
+##### 共有エグザンプル
++ admin/staff_membersコントローラのテスト
+```
+$ mkdir -p spec/support
+$ touch spec/support/shared_examples_for_admin_controllers.rb
+```
+##### 強制的ログアウトのテスト
+```
+$ touch spec/controllers/staff/top_controller_spec.rb
+$ docker-compose run app bin/rspec spec/controllers/staff/top_controller_spec.rb
+```
+##### セッションタイムアウトのテスト
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する

@@ -1,7 +1,18 @@
 require 'rails_helper'
 
 describe Admin::StaffMembersController do
+  context 'ログイン前' do
+    it_behaves_like 'a protected admin controller'
+  end
+end
+
+describe Admin::StaffMembersController do
   let(:params_hash) { attributes_for(:staff_member) }
+  let(:administrator) { create(:administrator) }
+
+  before do
+    session[:administrator_id] = administrator.id
+  end
 
   describe '#crate' do
     example '職員一覧ページにリダイレクト' do
