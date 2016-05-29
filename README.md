@@ -661,6 +661,30 @@ $ docker-compose run app bin/rspec spec/controllers/admin/staff_members_controll
 $ touch app/views/errors/bad_request.html.erb
 ```
 
+#### 職員自身によるアカウント管理機能
+##### showアクション
+```
+$ docker-compose run app bin/rails g controller staff/accounts
+$ touch app/views/staff/accounts/show.html.erb
+$ touch app/assets/stylesheets/staff/tables.css.scss
+```
+##### editアクション
+```
+$ touch app/views/staff/accounts/edit.html.erb
+$ touch app/views/staff/accounts/_form.html.erb
+$ cp app/assets/stylesheets/admin/form.css.scss app/assets/stylesheets/staff
+```
+##### updateアクション
+```
+$ mkdir -p spec/controllers/staff
+$ touch spec/controllers/staff/accounts_controller_spec.rb
+```
+##### updateアクションのテスト
+```
+$ docker-compose run app bin/rspec spec/controllers/staff/accounts_controller_spec.rb
+```
+
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
