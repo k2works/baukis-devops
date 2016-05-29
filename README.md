@@ -639,6 +639,28 @@ $ docker-compose run app bin/rake db:reset
 ##### updateアクション
 ##### destroyアクション
 
+#### String Parameters
+##### マスアサインメント脆弱性
+##### Strong Parametersによる防御
+##### コントローラのテスト
++ attributes_for
+```
+$ mkdir -p spec/controllers/admin
+$ touch spec/controllers/admin/staff_members_controller_spec.rb
+```
++ createアクションのテスト
+```
+$ docker-compose run app bin/rspec spec/controllers/admin/staff_members_controller_spec.rb
+```
++ updateアクションのテスト
+```
+$ docker-compose run app bin/rspec spec/controllers/admin/staff_members_controller_spec.rb
+```
+##### 400 Bad Request
+```
+$ touch app/views/errors/bad_request.html.erb
+```
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
