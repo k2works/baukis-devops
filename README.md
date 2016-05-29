@@ -634,6 +634,11 @@ $ docker-compose run app bin/rake db:reset
 ##### newアクション
 ##### editアクション
 
+#### 管理者による職員アカウント管理機能（後編）
+##### createアクション
+##### updateアクション
+##### destroyアクション
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
