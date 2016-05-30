@@ -88,3 +88,5 @@ crashlytics-build.properties
 fabric.properties
 ### Vagrant template
 .vagrant/
+
+get-pip.py
