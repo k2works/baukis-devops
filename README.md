@@ -884,6 +884,37 @@ $ touch config/locales/models/staff/change_password_form.ja.yml
 ```
 + スタイルシートの書き換え
 
+#### jQueryとCoffeeScript
+##### 準備作業
++ app/assets/javascriptsディレクトリの分割
+```
+$ cp app/assets/javascripts/application.js app/assets/javascripts/admin.js
+$ cp app/assets/javascripts/application.js app/assets/javascripts/customer.js
+$ cp app/assets/javascripts/application.js app/assets/javascripts/staff.js
+$ rm app/assets/javascripts/application.js
+$ mkdir -p app/assets/javascripts/admin
+$ mkdir -p app/assets/javascripts/customer
+$ mkdir -p app/assets/javascripts/shared
+```
++ レイアウトファイルの修正
++ アセットパイプラインの設定
+##### 入力フォームの有効・無効を切り替える
++ フォームプレゼンターの修正
++ CoffeeScriptプログラムの作成
+```
+$ touch app/assets/javascripts/admin/staff_member_form.js.coffee
+```
++ CoffeeScriptプログラムの作成
++ 動作確認
+#### Datepicker
+##### 準備作業
+##### Datepickerの利用
+```
+$ touch app/assets/javascripts/shared/datepicker.js.coffee
+```
+##### FormPresenterの修正
+
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
