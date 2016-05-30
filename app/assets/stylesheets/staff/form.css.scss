@@ -18,7 +18,7 @@ div#wrapper {
             display: block;
             padding: $moderate 0;
           }
-          label.requird:after {
+          label.required:after {
             content: '*';
             padding-left: $narrow;
             color: $red;
