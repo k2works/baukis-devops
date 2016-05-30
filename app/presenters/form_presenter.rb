@@ -35,6 +35,12 @@ class FormPresenter
   def date_filed_block(name, label_text, options = {})
     markup(:div, class: 'input-block') do |m|
       m << decorated_label(name, label_text, options)
+      if options[:class].kind_of?(String)
+        classes = options[:class].strip.split + [ 'datepicker' ]
+        options[:class] = classes.uniq.join(' ')
+      else
+        options[:class] = 'datepicker'
+      end
       m << text_field(name, options)
       m << error_messages_for(name)
     end
