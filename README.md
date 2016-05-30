@@ -882,6 +882,10 @@ $ touch config/locales/models/staff_member.ja.yml
 $ mkdir -p config/locales/models/staff
 $ touch config/locales/models/staff/change_password_form.ja.yml
 ```
+<<<<<<< HEAD
+=======
++ スタイルシートの書き換え
+>>>>>>> 9fceb5c0350f099af6d8c586547b6a49b5e16ec4
 
 ## 運用
 ### ステージング環境の運用
