@@ -820,7 +820,68 @@ $ touch app/forms/staff/change_password_form.rb
 $ touch app/views/staff/passwords/edit.html.erb
 ```
 ##### バリデーション
-
+#### モデルプレゼンター
+##### 問題の所在
++ 雑然としたERBテンプレート
+＋どこでメソッドを定義するか
+##### プレゼンターとは
++ ModelPresenterクラスの定義
+```
+$ mkdir -p app/presenters
+$ touch app/presenters/model_presenter.rb
+$ touch app/presenters/staff_member_presenter.rb
+```
++ モデルプレゼンターの利用
++ 委譲
+#### HtmlBuilder
+##### 問題の所在
+##### HtmlBuilderモジュルの作成
+```
+$ mkdir -p app/lib
+$ touch app/lib/html_builder.rb
+```
+##### markupメソッドの使用法
++ 引数なしの場合
++ 引数ありの場合
+##### StaffEventPresenter
+```
+$ touch app/presenters/staff_event_presenter.rb
+$ rm app/views/admin/staff_events/_event.html.erb
+```
+#### フォームプレゼンター
+##### 問題の所在
+##### FormPresenterクラスの定義
+```
+$ touch app/presenters/form_presenter.rb
+```
+##### フォームプレゼンターの利用
++ StaffMemberFormPresenterクラスの作成
+```
+$ touch app/presenters/staff_member_form_presenter.rb
+```
++ 部分テンプレートの書き換え
++ スタイルシートの調整
++ フォームプレゼンターの拡張
+##### さらなる改善
++ labelメソッドの書き換え
++ ERBテンプレート内でmarkupメソッドを使う
++ with_optionsメソッド
+#### 入力エラーメッセージの生成
+##### Errorsオブジェクト
+##### エラーメッセージの設定
+```
+$ mkdir -p config/locales/models
+$ touch config/locales/models/errors.ja.yml
+$ touch config/locales/models/staff_member.ja.yml
+```
+##### エラーメッセージの生成
+##### パスワード変更フォームの改造
++ ERBテンプレートの書き換え
++ 翻訳データの作成
+```
+$ mkdir -p config/locales/models/staff
+$ touch config/locales/models/staff/change_password_form.ja.yml
+```
 
 ## 運用
 ### ステージング環境の運用
