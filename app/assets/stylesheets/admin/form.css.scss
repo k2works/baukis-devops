@@ -26,6 +26,9 @@ div#wrapper {
           input[type='checkbox']+label { display: inline-block; }
           input[type='radio']+label { display: inline-block; }
         }
+        div.input-block {
+          input { margin-right: $narrow * 2; }
+        }
         div.notes {
           text-align: right;
           font-size: $small;
@@ -42,6 +45,11 @@ div#wrapper {
           padding: 0;
           label { color: $red }
           input { background-color: $pink}
+        }
+        div.error_message {
+          color: $red;
+          font-size: $small;
+          padding: 0 $very_wide;
         }
       }
     }
