@@ -778,6 +778,50 @@ $ docker-compose build
 ##### includeメソッド
 ##### リファクタリング
 
+#### モデルオブジェクトの正規化とバリデーション
+##### 値の正規化とバリデーション
+##### 準備作業
++ Gemパッケージのインストール
+```
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle install
+$ docker-compose build
+```
++ スタイルシートの書き換え
+##### 氏名とフリガナの正規化とバリデーション
++ validatesメソッド
++ before_validationメソッド
+```
+$ touch app/models/concerns/string_normalizer.rb
+```
+##### 開始日と終了日のバリデーション
+##### メールアドレスの正規化とバリデーション
++ バリデーション（１）
++ バリデーション（２）
+##### 正規化とバリデーションのテスト
++ 正規化とテスト
++ バリデーションのテスト
+```
+$ docker-compose run app bin/rspec spec/models/staff_member_spec.rb
+```
+#### 職員が自分のパスワードを変更する機能
+##### ルーテイングの設定
+##### showアクション
+```
+$ docker-compose run app bin/rails g controller staff/passwords
+```
+##### editアクション
++ フォームオブジェクト
+```
+$ touch app/forms/staff/change_password_form.rb
+```
++ アクション
++ ERBテンプレート
+```
+$ touch app/views/staff/passwords/edit.html.erb
+```
+##### バリデーション
+
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
