@@ -1,0 +1,7 @@
+<span class="last">
+  <%= link_to_unless(current_page.last?,
+                     t('views.pagination.last').html_safe, url) do |name|
+    content_tag(:sapn, name, class: 'disabled')
+  end
+  %>
+</span>

@@ -708,6 +708,76 @@ $ touch spec/controllers/staff/top_controller_spec.rb
 $ docker-compose run app bin/rspec spec/controllers/staff/top_controller_spec.rb
 ```
 ##### セッションタイムアウトのテスト
+
+#### モデル間の関連付け
+##### 一対多の関連付け
+##### 外部キー制約
+```
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle install
+$ docker-compose build
+```
+##### StaffEventモデルの追加
++ マイグレーション
+```
+$ docker-compose run app bin/rails g model staff_event
+$ rm spec/models/staff_event_spec.rb
+```
++ モデル間の関連付け
+```
+$ docker-compose run app bin/rake db:migrate
+```
+##### イベントの記録
+
+#### ネストされたリソース
+##### ネストされたリソースとは
++ ルーテイングの設定
++ リンクの設置
+##### admin/staff_eventsコントローラ
++ indexアクションの実装
+```
+$ docker-compose run app rails g controller admin/staff_events
+```
++ ERBテンプレートの作成
+```
+$ touch app/views/admin/staff_events/index.html.erb
+$ touch app/views/admin/staff_events/_event.html.erb
+```
++ StaffEvent#descriptionメソッドの定義
++ 動作確認
+
+#### ページネーション
+##### シードデータの投入
+```
+$ touch db/seeds/development/staff_events.rb
+$ docker-compose run app bin/rake db:reset
+```
+##### Gemパッケージkaminari
+```
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle install
+$ docker-compose build
+$ docker-compose run app bin/rails g kaminari:config
+$ docker-compose run app bin/rails g kaminari:views default
+$ mkdir -p config/locales/views
+$ touch config/locales/views/paginate.ja.yml
+```
+##### indexアクションの修正
+##### ERBテンプレートの修正
+##### ページネーションのカスタマイズ
++ ERBテンプレートの修正
++ スタイルシートの作成
+```
+$ touch app/assets/stylesheets/admin/pagination.css.scss
+```
+#### N + 1問題
+##### Gemパッケージquiet_assets
+```
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle install
+$ docker-compose build
+```
+##### N+1問題とは
+##### includeメソッド
+
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
