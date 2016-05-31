@@ -1023,6 +1023,63 @@ $ touch app/assets/stylesheets/shared/datepicker.css.scss
 + create/updateアクションの実装
 ##### destroyアクションの実装
 
+#### Capybara
+##### Capybaraとは
+##### 準備作業
++ FeaturesSpecHelperモジュール
+```
+$ touch spec/support/features_spec_helper.rb
+```
++ ファクトリーの定義
+```
+$ touch spec/factories/addresses.rb
+$ touch spec/factories/customers.rb
+```
+##### 顧客アカウント更新機能のテスト
+```
+$ mkdir -p spec/features/staff
+$ touch spec/features/staff/customer_management_spec.rb
+$ docker-compose run app bin/rspec spec/features/staff/customer_management_spec.rb
+```
+
+##### 顧客アカウント新規登録機能のテスト
+```
+$ docker-compose run app bin/rspec spec/features/staff/customer_management_spec.rb
+```
+#### 顧客アカウント新規登録・更新機能の改良
+##### モデルオブジェクトにおける値の正規化とバリデーション
++ Customerモデル
++ Addressモデル、HomeAddressモデル、WorkAddressモデル
++ 翻訳ファイル
+```
+$ touch config/locales/models/customer.ja.yml
+$ touch config/locales/models/address.ja.yml
+```
++ 動作確認
+##### フォームオブジェクトのおけるバリデーションの実施
++ CustomerFormの修正
+##### バリデーションのテスト
+```
+$ docker-compose run app bin/rspec spec/features/staff/customer_management_spec.rb
+```
+##### autosaveオプションによる処理の簡素化
+#### ActiveSupport::Concernによるコード共有
+##### PersonalNameHolderモジュールの抽出
+```
+$ touch app/models/concerns/personal_name_holder.rb
+$ docker-compose run app bin/rspec
+```
+##### EmalHolderモジュールの抽出
+```
+$ touch app/models/concerns/email_holder.rb
+$ docker-compose run app bin/rspec
+```
+##### PasswordHolderモジュールの抽出
+```
+$ touch app/models/concerns/password_holder.rb
+$ docker-compose run app bin/rspec
+```
+
 ## 運用
 ### ステージング環境の運用
 #### 環境を終了する
