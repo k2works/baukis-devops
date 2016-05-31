@@ -913,7 +913,115 @@ $ touch app/assets/javascripts/admin/staff_member_form.js.coffee
 $ touch app/assets/javascripts/shared/datepicker.js.coffee
 ```
 ##### FormPresenterの修正
-
+#### 単一テーブル継承
+##### 単一テーブル継承とは
+##### 顧客関連テーブル群の作成
+```
+$ docker-compose run app bin/rails g model customer
+$ docker-compose run app bin/rails g model address
+$ rm spec/models/customer_spec.rb
+$ rm spec/models/address_spec.rb
+$ docker-compose run app bin/rake db:migrate
+```
+##### 顧客関連モデル群の初期実装
+```
+$ touch app/models/home_address.rb
+$ touch app/models/work_address.rb
+```
+#### 顧客アカウントの一覧表示・詳細表示
+##### シードデータの投入
+```
+$ touch db/seeds/development/customers.rb
+$ docker-compose run app bin/rake db:reset
+```
+##### 顧客アカウントの一覧表示
++ ルーテイングの設定
++ 職員トップページにリンクを設定
+```
+$ touch app/views/staff/top/dashboard.html.erb
+```
++ staff/customers#indexアクション
+```
+$ docker-compose run app bin/rails g controller staff/customers
+```
++ CustomerPresenter
+```
+$ touch app/presenters/customer_presenter.rb
+```
++ staff/customers#indexアクションのERBテンプレート
+```
+$ touch app/views/staff/customers/index.html.erb
+```
++ スタイルシート
+```
+$ cp app/assets/stylesheets/admin/pagination.css.scss app/assets/stylesheets/staff
+```
+##### 顧客アカウントの詳細表示
++ staff/customers#showアクション
++ ModelPresenterの修正
++ AddressPresenterの作成
+```
+$ touch app/presenters/address_presenter.rb
+```
++ Staff/customers#showアクションのERBテンプレート
+```
+$ touch app/views/staff/customers/show.html.erb
+```
+#### 顧客アカウントの新規登録・編集フォーム
+##### フォームオブジェクトの作成
+```
+$ touch app/forms/staff/customer_form.rb
+```
+##### new/editアクションの実装
+##### フォームプレゼンターの作成
++ CustomerFormPresenterクラスの作成
+```
+$ mv app/presenters/staff_member_form_presenter.rb app/presenters/user_form_presenter.rb
+$ touch app/presenters/staff_member_form_presenter.rb
+$ touch app/presenters/customer_form_presenter.rb
+```
++ AddressFormPresenterクラスの作成
+```
+$ touch app/presenters/address_form_presenter.rb
+```
++ FormPresenterクラスの拡張
+##### ERBテンプレート本体の作成
+```
+$ touch app/views/staff/customers/new.html.erb
+$ touch app/views/staff/customers/edit.html.erb
+```
+##### 部分テンプレート群の作成
++ 部分テンプレート（１）
+```
+$ touch app/views/staff/customers/_form.html.erb
+```
++ 部分テンプレート（２）
+```
+$ touch app/views/staff/customers/_customer_fields.html.erb
+```
++ 部分テンプレート（３）
+```
+$ touch app/views/staff/customers/_home_address_fields.html.erb
+```
++ 部分テンプレート（４）
+```
+$ touch app/views/staff/customers/_work_address_fields.html.erb
+```
+##### CoffeeScriptプログラムの修正
+```
+$ cp app/assets/javascripts/admin/staff_member_form.js.coffee app/assets/javascripts/staff/customer_form.js.coffee
+$ touch app/assets/javascripts/staff/datepicker.js.coffee
+```
+##### スタイルシートの修正
+```
+$ touch app/assets/stylesheets/shared/datepicker.css.scss
+```
+#### 顧客アカウントの新規登録・更新・削除
+##### フォームオブジェクトの拡張
++ assign_attributesメソッドの追加
++ saveメソッドの追加
++ create/updateアクションの実装
+##### destroyアクションの実装
 
 ## 運用
 ### ステージング環境の運用
