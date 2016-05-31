@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531003629) do
+ActiveRecord::Schema.define(version: 20160601060407) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "customer_id",   limit: 4,                null: false
@@ -58,6 +58,20 @@ ActiveRecord::Schema.define(version: 20160531003629) do
   add_index "customers", ["email_for_index"], name: "index_customers_on_email_for_index", unique: true, using: :btree
   add_index "customers", ["family_name_kana", "given_name_kana"], name: "index_customers_on_family_name_kana_and_given_name_kana", using: :btree
 
+  create_table "phones", force: :cascade do |t|
+    t.integer  "customer_id",      limit: 4,                   null: false
+    t.integer  "address_id",       limit: 4
+    t.string   "number",           limit: 255,                 null: false
+    t.string   "number_for_index", limit: 255,                 null: false
+    t.boolean  "primary",                      default: false, null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "phones", ["address_id"], name: "index_phones_on_address_id", using: :btree
+  add_index "phones", ["customer_id"], name: "index_phones_on_customer_id", using: :btree
+  add_index "phones", ["number_for_index"], name: "index_phones_on_number_for_index", using: :btree
+
   create_table "staff_events", force: :cascade do |t|
     t.integer  "staff_member_id", limit: 4,   null: false
     t.string   "type",            limit: 255, null: false
@@ -86,5 +100,7 @@ ActiveRecord::Schema.define(version: 20160531003629) do
   add_index "staff_members", ["family_name_kana", "given_name_kana"], name: "index_staff_members_on_family_name_kana_and_given_name_kana", using: :btree
 
   add_foreign_key "addresses", "customers", name: "addresses_customer_id_fk"
+  add_foreign_key "phones", "addresses"
+  add_foreign_key "phones", "customers"
   add_foreign_key "staff_events", "staff_members", name: "staff_events_staff_member_id_fk"
 end

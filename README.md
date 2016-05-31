@@ -1079,6 +1079,61 @@ $ docker-compose run app bin/rspec
 $ touch app/models/concerns/password_holder.rb
 $ docker-compose run app bin/rspec
 ```
+#### 自宅住所と勤務先の任意入力
+##### フィールドの有効化・無効化
++ 詳細仕様
++ フォームオブジェクトの書き換え
++ ERBテンプレートの書き換え
++ CoffeeScriptプログラムの書き換え
++ 動作確認
+##### フォームオブジェクトの修正
++ assign_attributesメソッドの書き換え（１）
++ assign_attributesメソッドの書き換え（２）
++ assign_attributesメソッドの書き換え（３）
+##### Capybaraによるテスト
++ 既存シナリオの修正
++ シナリオの追加
+```
+$ docker-compose run app bin/rspec spec/features/staff/customer_management_spec.rb
+```
+#### 顧客電話番号の管理（１）
+##### 電話番号管理機能の仕様
+##### phonesテーブルとPhoneモデル
++ マイグレーションスクリプト
+```
+$ docker-compose run app bin/rails g model phone
+$ rm spec/models/phone_spec.rb
+$ docker-compose run app bin/rake db:migrate
+```
++ Phoneモデルの実装
+##### 顧客、自宅住所、勤務先との関連付け
++ Customerモデル
++ Addressモデル
++ シードデータの投入
+```
+$ docker-compose run app bin/rake db:reset
+```
+#### 顧客電話番号の管理（２）
+##### 個人電話番号の入力欄表示
+```
+$ touch app/views/staff/customers/_phone_fields.html.erb
+```
+##### 個人電話番号の新規登録、更新、削除
++ CustomerFormクラスの拡張（１）
++ CustomerFormクラスの拡張（２）
++ 動作確認
++ Capybaraによるテスト
+```
+$ touch spec/features/staff/phone_management_spec.rb
+$ docker-compose run app bin/rspec spec/features/staff/phone_management_spec.rb
+```
+##### 自宅電話の新規登録、更新、削除
++ 自宅電話番号の入力欄表示
++ 自宅電話番号の新規登録、更新、削除
++ Capybaraによるテスト
+```
+$ docker-compose run app bin/rspec spec/features/staff/phone_management_spec.rb
+```
 
 ## 運用
 ### ステージング環境の運用
