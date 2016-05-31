@@ -85,9 +85,6 @@ ActiveRecord::Schema.define(version: 20160531003629) do
   add_index "staff_members", ["email_for_index"], name: "index_staff_members_on_email_for_index", unique: true, using: :btree
   add_index "staff_members", ["family_name_kana", "given_name_kana"], name: "index_staff_members_on_family_name_kana_and_given_name_kana", using: :btree
 
-<<<<<<< HEAD
-=======
   add_foreign_key "addresses", "customers", name: "addresses_customer_id_fk"
   add_foreign_key "staff_events", "staff_members", name: "staff_events_staff_member_id_fk"
 end
->>>>>>> b2e759877e2f15f689c2b4524417e58a0b037cf6
