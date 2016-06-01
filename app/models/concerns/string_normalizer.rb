@@ -12,7 +12,7 @@ module StringNormalizer
   end
 
   def normalize_as_furigana(text)
-    NKF.nkf('-w -Z1 --katakana', text)
+    NKF.nkf('-w -Z1 --katakana', text) if text
   end
 
   def normalize_as_postal_code(text)
