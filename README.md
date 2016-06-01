@@ -1079,6 +1079,109 @@ $ docker-compose run app bin/rspec
 $ touch app/models/concerns/password_holder.rb
 $ docker-compose run app bin/rspec
 ```
+#### 自宅住所と勤務先の任意入力
+##### フィールドの有効化・無効化
++ 詳細仕様
++ フォームオブジェクトの書き換え
++ ERBテンプレートの書き換え
++ CoffeeScriptプログラムの書き換え
++ 動作確認
+##### フォームオブジェクトの修正
++ assign_attributesメソッドの書き換え（１）
++ assign_attributesメソッドの書き換え（２）
++ assign_attributesメソッドの書き換え（３）
+##### Capybaraによるテスト
++ 既存シナリオの修正
++ シナリオの追加
+```
+$ docker-compose run app bin/rspec spec/features/staff/customer_management_spec.rb
+```
+#### 顧客電話番号の管理（１）
+##### 電話番号管理機能の仕様
+##### phonesテーブルとPhoneモデル
++ マイグレーションスクリプト
+```
+$ docker-compose run app bin/rails g model phone
+$ rm spec/models/phone_spec.rb
+$ docker-compose run app bin/rake db:migrate
+```
++ Phoneモデルの実装
+##### 顧客、自宅住所、勤務先との関連付け
++ Customerモデル
++ Addressモデル
++ シードデータの投入
+```
+$ docker-compose run app bin/rake db:reset
+```
+#### 顧客電話番号の管理（２）
+##### 個人電話番号の入力欄表示
+```
+$ touch app/views/staff/customers/_phone_fields.html.erb
+```
+##### 個人電話番号の新規登録、更新、削除
++ CustomerFormクラスの拡張（１）
++ CustomerFormクラスの拡張（２）
++ 動作確認
++ Capybaraによるテスト
+```
+$ touch spec/features/staff/phone_management_spec.rb
+$ docker-compose run app bin/rspec spec/features/staff/phone_management_spec.rb
+```
+##### 自宅電話の新規登録、更新、削除
++ 自宅電話番号の入力欄表示
++ 自宅電話番号の新規登録、更新、削除
++ Capybaraによるテスト
+```
+$ docker-compose run app bin/rspec spec/features/staff/phone_management_spec.rb
+```
+#### 顧客検索フォーム
+##### 顧客検索機能の仕様
+##### データベーススキーマの見直し
++ インデックスの必要性
+```
+$ docker-compose run app bin/rails g migration alter_customers1
+$ docker-compose run app bin/rails g migration alter_addresses1
+```
++ customersテーブルへのインデックス追加
++ addressesテーブルへのインデックスの追加
+```
+$ docker-compose run app bin/rake db:migrate
+```
+##### 誕生年、誕生月、誕生日の設定
++ Customerモデルの修正
++ SQL文によるマイグレーション
+```
+$ docker-compose run app bin/rails g migration update_customers1
+$ docker-compose run app bin/rake db:migrate
+$ docker-compose run app bin/rake db:rollback
+$ docker-compose run app bin/rake db:migrate
+```
+##### 検索フォームの表示
++ フォームオブジェクトの作成
+```
+$ touch app/forms/staff/customer_search_form.rb
+```
++ indexアクションの修正
++ 検索フォーム用の部分テンプレートの作成
+```
+$ touch app/views/staff/customers/_search_form.html.erb
+```
++ ERBテンプレートの本体の修正
++ スタイルシートの作成
+```
+$ touch app/assets/stylesheets/staff/search.css.scss
+```
+#### 検索機能の実装
+##### indexアクションの修正
+##### フォームオブジェクトの修正（１）
++ 検索条件の設定
++ 動作確認
+##### フォームオブジェクトの修正（２）
++ Customerモデルの修正
++ 動作確認
+##### 検索文字列の正規化
+
+
 
 ## 運用
 ### ステージング環境の運用
