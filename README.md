@@ -7,7 +7,7 @@
 | docker         | 1.10.3       |             |
 | docker-compose | 1.6.2        |             |
 | vagrant        | 1.7.4        |             |
-| Ruby           | 2.2.3        |             |
+| Ruby           | 2.3.0        |             |
 | MySQL          | 5.6          |             |
 | Nginx          | 1.9.15       |             |
 | Rails          | 4.2.5        |             |
@@ -32,7 +32,7 @@ $ vagrant ssh
 $ cd /vagrant
 $ docker run -it --rm --user "$(id -u):$(id -g)" -v "$PWD":/usr/src/app -w /usr/src/app rails:4.2.5 rails new -d mysql --skip-test-unit --skip-bundle .
 $ rm README.rdoc
-$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.2.3 bundle install
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.3.0 bundle install
 ```
 `Overwrite /usr/src/app/.gitignore? (enter "h" for help) [Ynaqdh]`が出たら`n`を入力してエンター
 
@@ -1184,7 +1184,22 @@ $ touch app/assets/stylesheets/staff/search.css.scss
 
 
 ## 運用
+### 開発環境の運用
+#### Rubyのバージョンを変更する
+`/ops/development/docker/Dockerfile-rails`の`FROM:ruby:x.x.x`を変更したいバージョンにして以下のコマンドを実行する。
+```
+$ cd /vagrant/ops/development/docker/
+$ docker-compose build
+$ cd /vagrant
+$ docker-compose build
+```
 ### ステージング環境の運用
+#### Rubyのバージョンを変更する
+`/ops/staging/docker/Dockerfile-rails`の`FROM:ruby:x.x.x`を変更したいバージョンにして以下のコマンドを実行する。
+```
+$ cd /vagrant/ops/staging/docker/
+$ docker-compose build
+```
 #### 環境を終了する
 ```
 $ eb use staging-env
@@ -1195,6 +1210,12 @@ $ aws cloudformation delete-stack --stack-name Baukis-devops-IAM
 $ aws cloudformation delete-stack --stack-name Baukis-devops-VPC
 ```
 ### 本番環境の運用
+#### Rubyのバージョンを変更する
+`/ops/production/docker/Dockerfile-rails`の`FROM:ruby:x.x.x`を変更したいバージョンにして以下のコマンドを実行する。
+```
+$ cd /vagrant/ops/production/docker/
+$ docker-compose build
+```
 #### 環境を終了する
 ```
 $ eb use production-env
