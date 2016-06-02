@@ -17,6 +17,7 @@
   m.br
   m << p.text_field_block(:postal_code, '郵便番号', size: 7)
   m << p.text_field_block(:phone_number, '電話番号')
+  m << p.text_field_block(:last_four_digits_of_phone_number, '電話番号下４桁', size: 4)
   m << f.submit('検索')
   end %>
 <% end %>
