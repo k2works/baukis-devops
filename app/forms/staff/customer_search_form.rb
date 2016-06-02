@@ -2,7 +2,7 @@ class Staff::CustomerSearchForm
   include ActiveModel::Model
   include StringNormalizer
 
-  attr_accessor :family_name_kana, :given_name_kana, :birth_year, :birth_month, :birth_mday, :address_type, :prefecture, :city, :phone_number
+  attr_accessor :family_name_kana, :given_name_kana, :birth_year, :birth_month, :birth_mday, :address_type, :prefecture, :city, :phone_number,:gender
 
   def search
     normalize_values
@@ -17,6 +17,17 @@ class Staff::CustomerSearchForm
     rel = rel.where(birth_year: birth_year) if birth_year.present?
     rel = rel.where(birth_month: birth_month) if birth_month.present?
     rel = rel.where(birth_mday: birth_mday) if birth_mday.present?
+
+    if gender.present?
+      case gender
+        when '男性'
+          rel = rel.where(gender: 'male')
+        when '女性'
+          rel = rel.where(gender: 'female')
+        else
+          raise
+      end
+    end
 
     rel.order(:family_name_kana, :given_name_kana)
 
