@@ -10,7 +10,7 @@
 | Ruby           | 2.3.0        |             |
 | MySQL          | 5.6          |             |
 | Nginx          | 1.9.15       |             |
-| Rails          | 4.2.5        |             |
+| Rails          | 4.2.6        |             |
 
 + DockerHubのアカウントを作っている
 + AWSのアカウントを作っている
@@ -1193,6 +1193,14 @@ $ docker-compose build
 $ cd /vagrant
 $ docker-compose build
 ```
+#### Railsのバージョンを変更する
+`Gemfile`の`gem 'rails', 'x.x.x'`を変更したいバージョンにして以下のコマンドを実行する。
+```
+$ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.3.0 bundle update
+$ docker-compose build
+```
+`docker-compose run app bin/rspec`を実行してアプリケーションのデグレードがないか確認する。
+
 ### ステージング環境の運用
 #### Rubyのバージョンを変更する
 `/ops/staging/docker/Dockerfile-rails`の`FROM:ruby:x.x.x`を変更したいバージョンにして以下のコマンドを実行する。
