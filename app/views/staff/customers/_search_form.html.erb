@@ -15,6 +15,7 @@
   m << p.drop_down_list_block(:prefecture, '都道府県:', Address::PREFECTURE_NAMES)
   m << p.text_field_block(:city, '市区町村:')
   m.br
+  m << p.text_field_block(:postal_code, '郵便番号', size: 7)
   m << p.text_field_block(:phone_number, '電話番号')
   m << f.submit('検索')
   end %>
