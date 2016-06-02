@@ -1,6 +1,28 @@
 require 'rails_helper'
 
 describe Staff::TopController do
+  context 'ログイン前' do
+    let(:staff_member) { create(:staff_member) }
+
+    describe 'IPアドレスによるアクセス制限' do
+      before do
+        Rails.application.config.baukis[:restrict_ip_addresses] = true
+      end
+
+      example '許可' do
+        AllowedSource.create!(namespace: 'staff', ip_address: '0.0.0.0')
+        get :index
+        expect(response).to render_template('staff/top/index')
+      end
+
+      example '拒否' do
+        AllowedSource.create!(namespace: 'staff', ip_address: '192.168.0.*')
+        get :index
+        expect(response).to render_template('errors/forbidden')
+      end
+    end
+  end
+
   context 'ログイン後' do
     let(:staff_member) { create(:staff_member) }
 

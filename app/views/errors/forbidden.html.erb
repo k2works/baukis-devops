@@ -2,7 +2,7 @@
   <h1>403 Forbidden</h1>
   <p>
     <%=
-      case @execption
+      case @exception
         when ApplicationController::IpAddressRejected
           "あなたのIPアドレス(#{request.ip}からは利用できません。"
         else

@@ -1,4 +1,4 @@
-# 目的
+`# 目的
 『実践Ruby on Rails 4: 現場のプロから学ぶ本格Webプログラミング』のサンプルアプリケーションをモダンなインフラストラクチャ構築アプローチでクラウド環境に展開するところまでを解説する。
 
 # 前提
@@ -1217,6 +1217,43 @@ $ touch spec/controllers/customer/session_controller_spec.rb
 ```
 + クッキーの有効期限テスト
 
+#### IPアドレスによるアクセス制限
+##### IPアドレスによるアクセス制限
++ 仕様
++ 準備作業
++ AllowedSourceモデル
+```
+$ docker-compose run app bin/rails g model AllowedSource
+$ docker-compose run app bin/rake db:migrate
+$ docker-compose run app bin/rspec spec/models/allowed_source_spec.rb
+```
++ クラスメソッドinclude?
++ コントローラの修正
++ 動作確認
+```
+$ docker-compose run app bin/rails r "AllowedSource.create(namespace: 'staff', ip_address: '127.0.0.1')"
+```
+##### 許可IPアドレスの管理
++ 仕様
++ ルーテイング
+##### 許可IPアドレスの一覧表示
+```
+$ docker-compose run app bin/rails g controller admin/allowed_sources
+$ touch app/presenters/allowed_source_presenter.rb
+$ touch app/views/admin/allowed_sources/index.html.erb
+$ docker-compose run app bin/rails r "AllowedSource.create(namespace: 'staff', ip_address: '127.0.0.1')"
+$ docker-compose run app bin/rails r "AllowedSource.create(namespace: 'staff', ip_address: '192.168.1.*')"
+```
++ 許可IPアドレスの新規登録フォーム
+```
+$ touch app/views/admin/allowed_sources/_new_allowed_source.html.erb
+```
++ 許可IPアドレスの追加
++ 許可IPアドレスの一括削除フォーム
++ 許可IPアドレスの一括削除
+```
+$ touch app/services/admin/allowed_sources_deleter.rb
+```
 
 ## 運用
 ### 開発環境の運用
@@ -1309,3 +1346,4 @@ $ vagrant destroy
 + [DockerHub](https://hub.docker.com/)
 + [DockerHub rails](https://hub.docker.com/_/rails/)
 + [DockerHub mysql](https://hub.docker.com/_/mysql/)
+`

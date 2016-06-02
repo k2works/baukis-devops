@@ -26,6 +26,6 @@ RSpec.configure do |config|
   end
 
   config.after do
-     Rails.application.config[:restrict_ip_addresses] = false
+     Rails.application.config.baukis[:restrict_ip_addresses] = false
   end
 end
