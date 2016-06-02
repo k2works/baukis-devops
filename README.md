@@ -1181,6 +1181,41 @@ $ touch app/assets/stylesheets/staff/search.css.scss
 + 動作確認
 ##### 検索文字列の正規化
 
+#### 次回から自動でログイン
+##### 顧客のログイン・ログアウト機能
++ ルーテイング
++ コントローラ
+```
+$ touch app/controllers/customer/base.rb
+$ docker-compose run app bin/rails g controller customer/sessions
+```
++ ビュー
+```
+$ cp app/views/admin/sessions/new.html.erb app/views/customer/sessions/
+$ cp -f app/views/admin/shared/_header.html.erb app/views/customer/shared/
+$ mkdir -p app/forms/customer
+$ cp app/forms/admin/login_form.rb app/forms/customer/
+$ cp app/assets/stylesheets/admin/flash.css.scss app/assets/stylesheets/customer
+$ cp app/assets/stylesheets/admin/sessions.css.scss app/assets/stylesheets/customer
+```
++ サービスオブジェクト
+```
+$ mkdir -p app/services/customer
+$ cp app/services/admin/authenticator.rb app/services/customer/
+```
++ 動作確認
+
+##### 自動ログイン機能の追加
++ ビューの修正
++ コントローラの修正
++ 動作確認
+##### RSpecによるテスト
++ クッキーの値テスト
+```
+$ mkdir -p spec/controllers/customer
+$ touch spec/controllers/customer/session_controller_spec.rb
+```
++ クッキーの有効期限テスト
 
 
 ## 運用
