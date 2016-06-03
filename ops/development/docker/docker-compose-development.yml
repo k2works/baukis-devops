@@ -17,6 +17,7 @@ services:
       - .:/usr/src/app
       - ./ops/development/docker/container/app/config/secrets.yml:/usr/src/app/config/secrets.yml
       - ./ops/development/docker/container/app/config/database.yml:/usr/src/app/config/database.yml
+      - ./ops/development/docker/container/app/tmp/pids:/usr/src/app/tmp/pids
     ports:
       - "3000:3000"
   proxy:
