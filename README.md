@@ -1300,6 +1300,22 @@ $ cat log/performace_spec.log
 + スコープの定義
 + テーブルの左結合(LEFT JOIN)
 
+#### プログラム管理機能（後編）
++ プログラム新規登録・更新フォームの仕様
++ プログラムの新規登録・編集フォーム
+```
+$ touch app/forms/staff/program_form.rb
+$ touch app/presenters/program_form_presenter.rb
+$ touch app/views/staff/programs/new.html.erb
+$ touch app/views/staff/programs/edit.html.erb
+$ touch app/views/staff/programs/_form.html.erb
+```
++ プログラムの新規登録と更新
++ バリデーション
+```
+$ touch app/lib/date_string_validator.rb
+$ touch config/locales/models/program.ja.yml
+```
 
 ## 運用
 ### 開発環境の運用
