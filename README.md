@@ -1254,6 +1254,52 @@ $ touch app/views/admin/allowed_sources/_new_allowed_source.html.erb
 ```
 $ touch app/services/admin/allowed_sources_deleter.rb
 ```
+#### 多対多の関連付け
+##### 多対多の関連付け
++ プログラム管理機能の概要
++ データベース設計
+```
+$ docker-compose run app bin/rails g model program
+$ docker-compose run app bin/rails g model entry
+$ rm -rf spec/models/program_spec.rb
+$ rm -rf spec/models/entry_spec.rb
+$ docker-compose run app bin/rake db:migrate
+```
++ Entryモデルとプログラムモデル
+```
+$ touch db/seeds/development/programs.rb
+$ touch db/seeds/development/entries.rb
+$ docker-compose run app bin/rake db:reset
+```
+##### プログラム管理機能（前編）
++ プログラムの一覧表示
+```
+$ docker-compose run app bin/rails g controller staff/programs
+$ touch app/presenters/program_presenter.rb
+$ touch app/views/staff/programs/index.html.erb
+$ touch app/views/staff/programs/_program.html.erb
+```
++ プログラムの詳細表示
+```
+$ touch app/views/staff/programs/show.html.erb
+$ touch app/assets/stylesheets/staff/divs_and_spans.css.scss
+```
+##### パフォーマンスの改善
++ ベンチマーク測定の準備
+```
+$ touch spec/support/performance_spec_helper.rb
+```
++ プログラム一覧表示機能のベンチマーク測定
+```
+$ touch spec/factories/programs.rb
+$ touch spec/features/staff/program_management_spec.rb
+$ docker-compose run app bin/rspec -t performance spec/features/staff/program_management_spec.rb
+$ cat log/performace_spec.log
+```
++ includesメソッドによる改善
++ スコープの定義
++ テーブルの左結合(LEFT JOIN)
+
 
 ## 運用
 ### 開発環境の運用
