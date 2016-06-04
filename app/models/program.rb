@@ -1,5 +1,5 @@
 class Program < ActiveRecord::Base
-  has_many :entries, dependent: :destroy
+  has_many :entries, dependent: :restrict_with_exception
   has_many :applicants, through: :entries, source: :customer
   belongs_to :registrant, class_name: 'StaffMember'
 
@@ -24,7 +24,11 @@ class Program < ActiveRecord::Base
   }
   validates :min_number_of_participants, numericality: {
       only_integer: true, greater_than_or_equal_to: 1,
-      less_than_or_equal_to: 1000, allwo_blank: true
+      less_than_or_equal_to: 1000, allow_blank: true
+  }
+  validates :max_number_of_participants, numericality: {
+      only_integer: true, greater_than_or_equal_to: 1,
+      less_than_or_equal_to: 1000, allow_blank: true
   }
   validate do
     if min_number_of_participants && max_number_of_participants && min_number_of_participants > max_number_of_participants
@@ -39,6 +43,10 @@ class Program < ActiveRecord::Base
         .order(application_start_time: :desc)
         .includes(:registrant)
   }
+
+  def deletable?
+    entries.empty?
+  end
 
   private
   def set_application_start_time
