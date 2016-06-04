@@ -1406,7 +1406,6 @@ $ touch app/views/customer/accounts/_confirming_phone_fields.html.erb
 ```
 $ mkdir spec/features/customer
 $ touch spec/features/customer/account_management_spec.rb
-
 ```
 
 ## 運用
