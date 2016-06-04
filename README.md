@@ -1357,6 +1357,58 @@ $ touch app/services/customer/entry_acceptor.rb
 + プログラム申し込み機能の仕上げ
 + 申し込みのキャンセル
 
+#### フォームの確認画面
+##### 顧客自身によるアカウント管理機能
++ ルーテイング
++ 顧客トップページの修正
++ アカウント詳細表示
+```
+$ docker-compose run app bin/rails g controller customer/accounts
+$ cp app/views/staff/customers/show.html.erb app/views/customer/accounts/
+```
++ アカウント編集機能
+```
+$ cp app/forms/staff/customer_form.rb app/forms/customer/account_form.rb
+$ cd app/views/
+$ cp staff/customers/edit.html.erb customer/accounts/
+$ cp staff/customers/_customer_fields.html.erb customer/accounts/
+$ cp staff/customers/_form.html.erb customer/accounts/
+$ cp staff/customers/_home_address_fields.html.erb customer/accounts/
+$ cp staff/customers/_phone_fields.html.erb customer/accounts/
+$ cp staff/customers/_work_address_fields.html.erb customer/accounts/
+$ cd ../..
+$ cd app/assets/javascripts/
+$ cp staff/customer_form.js.coffee customer/account_form.js.coffee
+$ cd ../..
+$ cp app/assets/stylesheets/staff/form.css.scss app/assets/stylesheets/customer
+```
+##### 確認画面
++ ルーテイング
++ 編集フォームの修正
+```
+$ touch app/views/customer/accounts/confirm.html.erb
+```
++ 確認画面の仮実装
++ 確認画面用プレゼンターの作成
+```
+$ touch app/presenters/confirming_form_presenter.rb
+$ touch app/presenters/confirming_user_form_presenter.rb
+$ touch app/presenters/confirming_address_form_presenter.rb
+```
++ 確認画面の本実装
+```
+$ touch app/views/customer/accounts/_confirming_form.html.erb
+$ touch app/views/customer/accounts/_confirming_phone_fields.html.erb
+```
++ CoffeeScriptの修正
++ 訂正ボタン
++ Capybaraによるテスト
+```
+$ mkdir spec/features/customer
+$ touch spec/features/customer/account_management_spec.rb
+
+```
+
 ## 運用
 ### 開発環境の運用
 #### Rubyのバージョンを変更する

@@ -25,7 +25,8 @@ header {
   }
   a {
     float: right;
-    color: $very_light_gray
+    color: $very_light_gray;
+    margin-left: $wide;
   }
   span.logo-mark {
     font-weight: bold;

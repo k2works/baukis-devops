@@ -35,6 +35,9 @@ Rails.application.routes.draw do
       root 'top#index'
       get 'login' => 'sessions#new', as: :login
       resource :session, only: [ :create, :destroy ]
+      resource :account, except: [ :new, :create, :destroy ] do
+        patch :confirm
+      end
       resources :programs, only: [ :index, :show ] do
         resources :entries, only: [ :create ] do
           patch :cancel, on: :member
