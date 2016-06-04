@@ -46,4 +46,13 @@ class Staff::ProgramsController < Staff::Base
     flash.notice = 'プログラムを削除しました。'
     redirect_to :staff_programs
   end
+
+  # PATCH
+  def entries
+    entries_form = Staff::EntriesForm.new(Program.find(params[:id]))
+    entries_form.assign_attributes(params[:form])
+    entries_form.save
+    flash.notice = 'プログラム申し込みのフラグを更新しました。'
+    redirect_to :staff_programs
+  end
 end

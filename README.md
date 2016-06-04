@@ -1316,6 +1316,19 @@ $ touch app/views/staff/programs/_form.html.erb
 $ touch app/lib/date_string_validator.rb
 $ touch config/locales/models/program.ja.yml
 ```
+#### プログラム申込者管理機能
++ 多数のオブジェクトを一括編集するフォーム
+```
+$ touch app/views/staff/programs/_entries_form.html.erb
+$ touch app/assets/stylesheets/staff/entries.css.scss
+```
++ 隠しフィールドとCoffeeScript
+```
+$ touch app/forms/staff/entries_form.rb
+$ touch app/assets/javascripts/staff/entries_form.js.coffee
+```
++ 多数のオブジェクトの一括更新処理
+
 
 ## 運用
 ### 開発環境の運用
