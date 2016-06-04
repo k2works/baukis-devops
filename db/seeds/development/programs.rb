@@ -7,6 +7,8 @@ staff_members = StaffMember.order(:id)
              description: "会員向け特別プログラムです。" * 10,
              application_start_time: t,
              application_end_time: t.advance(days: 7),
-             registrant: staff_members.sample
+             registrant: staff_members.sample,
+             max_number_of_participants: 100,
+             min_number_of_participants:   1
   )
 end
