@@ -1300,7 +1300,7 @@ $ cat log/performace_spec.log
 + スコープの定義
 + テーブルの左結合(LEFT JOIN)
 
-#### プログラム管理機能（後編）
+##### プログラム管理機能（後編）
 + プログラム新規登録・更新フォームの仕様
 + プログラムの新規登録・編集フォーム
 ```
@@ -1316,7 +1316,7 @@ $ touch app/views/staff/programs/_form.html.erb
 $ touch app/lib/date_string_validator.rb
 $ touch config/locales/models/program.ja.yml
 ```
-#### プログラム申込者管理機能
+##### プログラム申込者管理機能
 + 多数のオブジェクトを一括編集するフォーム
 ```
 $ touch app/views/staff/programs/_entries_form.html.erb
@@ -1329,6 +1329,33 @@ $ touch app/assets/javascripts/staff/entries_form.js.coffee
 ```
 + 多数のオブジェクトの一括更新処理
 
+##### プログラム一覧表示・詳細表示機能（顧客向け）
++ ルーテイング
++ 顧客トップページの修正
+```
+$ touch app/views/customer/top/dashboard.html.erb
+```
++ プログラムの一覧と詳細
+```
+$ docker-compose run app bin/rails g controller customer/programs
+$ touch app/views/customer/programs/index.html.erb
+$ touch app/views/customer/programs/_program.html.erb
+$ touch app/views/customer/programs/show.html.erb
+$ cp app/assets/stylesheets/staff/tables.css.scss app/assets/stylesheets/customer
+$ cp app/assets/stylesheets/staff/pagination.css.scss app/assets/stylesheets/customer
+$ cp app/assets/stylesheets/staff/divs_and_spans.css.scss app/assets/stylesheets/customer
+```
+##### プログラム申し込み機能
++ 仕様の確認
++ 「申し込む」ボタンの設置
++ 申込を受け取る
+```
+$ docker-compose run app bin/rails g controller customer/entries
+$ touch app/services/customer/entry_acceptor.rb
+```
++ 排他制御
++ プログラム申し込み機能の仕上げ
++ 申し込みのキャンセル
 
 ## 運用
 ### 開発環境の運用

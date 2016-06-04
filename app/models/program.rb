@@ -43,6 +43,10 @@ class Program < ActiveRecord::Base
         .order(application_start_time: :desc)
         .includes(:registrant)
   }
+  scope :published, -> {
+    where('application_start_time <= ?', Time.current)
+    .order(application_start_time: :desc)
+  }
 
   def deletable?
     entries.empty?
