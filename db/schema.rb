@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603050244) do
+ActiveRecord::Schema.define(version: 20160606002622) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "customer_id",   limit: 4,                null: false
@@ -99,6 +99,32 @@ ActiveRecord::Schema.define(version: 20160603050244) do
   add_index "entries", ["customer_id"], name: "index_entries_on_customer_id", using: :btree
   add_index "entries", ["program_id", "customer_id"], name: "index_entries_on_program_id_and_customer_id", unique: true, using: :btree
 
+  create_table "messages", force: :cascade do |t|
+    t.integer  "customer_id",     limit: 4,                     null: false
+    t.integer  "staff_member_id", limit: 4
+    t.integer  "root_id",         limit: 4
+    t.integer  "parent_id",       limit: 4
+    t.string   "type",            limit: 255,                   null: false
+    t.string   "status",          limit: 255,   default: "new", null: false
+    t.string   "subject",         limit: 255,                   null: false
+    t.text     "body",            limit: 65535
+    t.text     "remarks",         limit: 65535
+    t.boolean  "discarded",                     default: false, null: false
+    t.boolean  "deleted",                       default: false, null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  add_index "messages", ["customer_id", "deleted", "created_at"], name: "index_messages_on_customer_id_and_deleted_and_created_at", using: :btree
+  add_index "messages", ["customer_id", "deleted", "status", "created_at"], name: "index_messages_on_c_d_s_c", using: :btree
+  add_index "messages", ["customer_id", "discarded", "created_at"], name: "index_messages_on_customer_id_and_discarded_and_created_at", using: :btree
+  add_index "messages", ["customer_id"], name: "index_messages_on_customer_id", using: :btree
+  add_index "messages", ["parent_id"], name: "fk_rails_aafcb31dbf", using: :btree
+  add_index "messages", ["root_id", "deleted", "created_at"], name: "index_messages_on_root_id_and_deleted_and_created_at", using: :btree
+  add_index "messages", ["staff_member_id"], name: "index_messages_on_staff_member_id", using: :btree
+  add_index "messages", ["type", "customer_id"], name: "index_messages_on_type_and_customer_id", using: :btree
+  add_index "messages", ["type", "staff_member_id"], name: "index_messages_on_type_and_staff_member_id", using: :btree
+
   create_table "phones", force: :cascade do |t|
     t.integer  "customer_id",      limit: 4,                   null: false
     t.integer  "address_id",       limit: 4
@@ -160,6 +186,10 @@ ActiveRecord::Schema.define(version: 20160603050244) do
   add_foreign_key "addresses", "customers"
   add_foreign_key "entries", "customers"
   add_foreign_key "entries", "programs"
+  add_foreign_key "messages", "customers"
+  add_foreign_key "messages", "messages", column: "parent_id"
+  add_foreign_key "messages", "messages", column: "root_id"
+  add_foreign_key "messages", "staff_members"
   add_foreign_key "phones", "addresses"
   add_foreign_key "phones", "customers"
   add_foreign_key "programs", "staff_members", column: "registrant_id"

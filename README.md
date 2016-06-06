@@ -1407,6 +1407,50 @@ $ touch app/views/customer/accounts/_confirming_phone_fields.html.erb
 $ mkdir spec/features/customer
 $ touch spec/features/customer/account_management_spec.rb
 ```
+#### Ajax
+##### 顧客向け問い合わせフォーム
++ データベース設計
+```
+$ docker-compose run app bin/rails g model message
+$ docker-compose run app bin/rake db:migrate
+```
++ モデル間の関連付け
+```
+$ touch app/models/customer_message.rb
+$ touch app/models/staff_message.rb
+```
++ バリデーション等
++ ルーテイング
++ newアクション
+```
+$ docker-compose run app bin/rails g controller customer/messages
+$ touch app/views/customer/messages/new.html.erb
+$ touch app/views/customer/messages/_form.html.erb
+```
++ confirmアクション
+```
+$ touch app/views/customer/messages/confirm.html.erb
+$ touch app/views/customer/messages/_confirming_form.html.erb
+```
++ createアクション
+
+##### 問い合わせ到着の通知
++ ルーテイング
++ countアクション
+```
+$ docker-compose run app bin/rails g controller staff/messages
+```
++ ヘッダ
+```
+$ touch app/helpers/staff_helper.rb
+```
++ モデル間の関連付け
++ Ajax
+```
+$ touch app/assets/javascripts/staff/paths.js.cofee.erb
+$ touch app/assets/javascripts/staff/messages.js.coffee
+```
++ アクセス制限
 
 ## 運用
 ### 開発環境の運用

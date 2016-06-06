@@ -10,4 +10,5 @@
     end
   %>
   <%= link_to 'アカウント', :staff_account if current_staff_member %>
+  <%= number_of_unporcessed_messages if current_staff_member %>
 </header>
