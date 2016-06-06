@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606002622) do
+ActiveRecord::Schema.define(version: 20160606091344) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "customer_id",   limit: 4,                null: false
@@ -99,6 +99,13 @@ ActiveRecord::Schema.define(version: 20160606002622) do
   add_index "entries", ["customer_id"], name: "index_entries_on_customer_id", using: :btree
   add_index "entries", ["program_id", "customer_id"], name: "index_entries_on_program_id_and_customer_id", unique: true, using: :btree
 
+  create_table "message_tag_links", force: :cascade do |t|
+    t.integer "message_id", limit: 4, null: false
+    t.integer "tag_id",     limit: 4, null: false
+  end
+
+  add_index "message_tag_links", ["message_id", "tag_id"], name: "index_message_tag_links_on_message_id_and_tag_id", unique: true, using: :btree
+
   create_table "messages", force: :cascade do |t|
     t.integer  "customer_id",     limit: 4,                     null: false
     t.integer  "staff_member_id", limit: 4
@@ -182,6 +189,12 @@ ActiveRecord::Schema.define(version: 20160606002622) do
 
   add_index "staff_members", ["email_for_index"], name: "index_staff_members_on_email_for_index", unique: true, using: :btree
   add_index "staff_members", ["family_name_kana", "given_name_kana"], name: "index_staff_members_on_family_name_kana_and_given_name_kana", using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.string "value", limit: 255, null: false
+  end
+
+  add_index "tags", ["value"], name: "index_tags_on_value", unique: true, using: :btree
 
   add_foreign_key "addresses", "customers"
   add_foreign_key "entries", "customers"

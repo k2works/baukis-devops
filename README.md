@@ -1503,6 +1503,41 @@ $ touch app/views/staff/replies/confirm.html.erb
 $ touch app/views/staff/replies/_confirming_form.html.erb
 ```
 + 返信の送信
+#### メッセージへのタグ付け
++ データベース設計
+```
+$ docker-compose run app bin/rails g model tag
+$ docker-compose run app bin/rails g model message_tag_link
+$ rm spec/models/message_tag_link_spec.rb
+$ docker-compose run app bin/rake db:migrate
+```
++ モデル間の関連付け
++ Tag-itのインストール
+```
+$ curl https://raw.githubusercontent.com/aehlke/tag-it/master/js/tag-it.js -o vendor/assets/javascripts/tag-it.js
+$ curl https://raw.githubusercontent.com/aehlke/tag-it/master/css/jquery.tagit.css -o vendor/assets/stylesheets/jquery.tagit.css
+$ curl https://raw.githubusercontent.com/aehlke/tag-it/master/css/tagit.ui-zendesk.css -o vendor/assets/stylesheets/tagit.ui-zendesk.css
+ touch app/assets/javascripts/staff/tag-it.js.coffee
+```
++ タグの追加・削除インターフェース
++ タグの追加・削除
++ JavaScriptプログラムの改善
++ 照合順序の変更
+```
+$ docker-compose run app bin/rake db:reset
+$ docker-compose run app bin/rails g migration change_collations
+$ docker-compose run app bin/rake db:migrate
+```
+#### タグによるメッセージの絞り込み
++ ルーテイング
++ indexアクションの変更
+```
+$ touch app/views/staff/messages/_tags.html.erb
+```
++ リンクの設置
+```
+$ touch app/views/staff/messages/_links.html.erb
+```
 
 ## 運用
 ### 開発環境の運用
