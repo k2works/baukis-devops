@@ -1452,6 +1452,30 @@ $ touch app/assets/javascripts/staff/messages.js.coffee
 ```
 + アクセス制限
 
+### ツリー構造
+#### 問い合わせの一覧表示と削除
++ ルーテイング
++ リンクの設置
++ メッセージ一覧
+```
+$ touch app/views/staff/messages/index.html.erb
+$ touch app/presenters/message_presenter.rb
+```
++ シードデータの投入
+```
+$ touch db/seeds/development/messages.rb
+$ docker-compose run app bin/rake db:reset
+```
++ 動作確認
++ 問い合わせの削除
+#### メッセージツリーの表示
++ showアクション
+```
+$ touch app/views/staff/messages/show.html.erb
+```
++ メッセージツリーの表示
+
+
 ## 運用
 ### 開発環境の運用
 #### Rubyのバージョンを変更する
