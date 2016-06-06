@@ -1474,7 +1474,18 @@ $ docker-compose run app bin/rake db:reset
 $ touch app/views/staff/messages/show.html.erb
 ```
 + メッセージツリーの表示
-
+#### パフォーマンスチューニング
++ パフォーマンス測定
+```
+$ touch spec/factories/messages.rb
+$ touch spec/features/staff/message_management_spec.rb
+$ docker-compose run app bin/rspec -t performance spec/features/staff/message_management_spec.rb
+$ cat log/performance_spec.log
+```
++ パフォーマンスの向上策
+```
+$ touch app/lib/simple_tree.rb
+```
 
 ## 運用
 ### 開発環境の運用
