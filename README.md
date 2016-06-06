@@ -1486,6 +1486,23 @@ $ cat log/performance_spec.log
 ```
 $ touch app/lib/simple_tree.rb
 ```
+### タグ付け
+#### 問い合わせへの返信機能
++ ルーテイング
++ リンクの設置
++ 返信内容編集フォーム
+```
+$ docker-compose run app bin/rails g controller staff/replies
+$ touch app/views/staff/replies/new.html.erb
+$ touch app/views/staff/replies/_form.html.erb
+$ touch app/views/staff/replies/_message.html.erb
+```
++ 確認画面
+```
+$ touch app/views/staff/replies/confirm.html.erb
+$ touch app/views/staff/replies/_confirming_form.html.erb
+```
++ 返信の送信
 
 ## 運用
 ### 開発環境の運用
