@@ -1538,6 +1538,16 @@ $ touch app/views/staff/messages/_tags.html.erb
 ```
 $ touch app/views/staff/messages/_links.html.erb
 ```
+#### 一意制約と排他的ロック
++ 問題の所在
++ 排他制御のための専用テーブルを作る
+```
+$ docker-compose run app bin/rails g model hash_lock
+$ rm spec/models/hash_lock_spec.rb
+$ docker-compose run app bin/rake db:migrate
+$ touch db/seeds/hash_locks.rb
+$ docker-compose run app bin/rails r db/seeds/hash_locks.rb
+```
 
 ## 運用
 ### 開発環境の運用

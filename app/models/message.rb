@@ -37,6 +37,7 @@ class Message < ActiveRecord::Base
 
   def add_tag(label)
     self.class.transaction do
+      HashLock.acquire('tags','value',label)
       tag = Tag.find_by(value: label)
       tag ||= Tag.create!(value: label)
       unless message_tag_links.where(tag_id: tag.id).exists?
@@ -47,6 +48,7 @@ class Message < ActiveRecord::Base
 
   def remove_tag(label)
     self.class.transaction do
+      HashLock.acquire('tags','value',label)
       if tag = Tag.find_by(value: label)
         message_tag_links.find_by(tag_id: tag.id).destroy
         if tag.message_tag_links.empty?
