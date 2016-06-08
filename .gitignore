@@ -90,4 +90,5 @@ fabric.properties
 .vagrant/
 
 .idea/
-ops/development/docker/container/app/tmp/
+ops/development/build/docker/container/app/tmp/
+*.box
