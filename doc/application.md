@@ -24,18 +24,47 @@
 ## <a name="2">共通設計指針</a>
 ### 設計クラス
 ### データ共有方式
++ モデルオブジェクト
++ フォームオブジェクト
++ paramsオブジェクト
++ フラッシュオブジェクト
 ### メッセージリソース、定数
+#### デザイン
++ SCSSパーシャル
+  + [色を変数で表現する](../app/assets/stylesheets/staff/_colors.css.scss)
+  + [寸法を変数で表現する](../app/assets/stylesheets/staff/_dimensions.css.scss)
+
 ## <a name="3">共通処理パターン指針</a>
 ### データアクセス
 ### 例外処理
++ [クラスメソッドresucue_from](../app/controllers/application_controller.rb)
+  + 500 Internal Server Error
+  + 403 Forbidden
+  + [404 Not Found](../app/controllers/errors_controller.rb)
+  + [ActiveSupport::Concern](../app/controllers/concerns/error_handlers.rb)
++ [エラーCSS](../app/assets/stylesheets/shared/errors.css.scss)
+
 ### ログ
 ### セキュリティ
++ [config/secrets.ymlとシークレットキーベース](../config/secrets.yml)・・・外部APIのキーなど秘密データをここに記述する。
++ [ハッシュ関数](../app/models/concerns/password_holder.rb)
 ### 初期化
++ [シードデータの投入](../db/seeds.rb)
 ### 国際化
 ### 日付処理
 ### 帳票出力
 ### 固定長データ・ファイルの扱い
 ### 共通機能
+#### サービスオブジェクト
++ [Staff::Authenticatorクラス](../app/services/staff/authenticator.rb)
+#### ヘルパークラス
++ [ヘルパーメソッドの定義](../app/helpers)
+#### デザイン
++ スタイルシートの分割
+  + [CSSファイル](../app/assets/stylesheets)
+  + [レイアウトファイル](../app/views/layouts)
+  + [アプリケーションコントローラ](../app/controllers/application_controller.rb)
+
 ## <a name="4">処理パターン固有指針</a>
 ### Web固有
 ### MQ待ち受け処理固有
