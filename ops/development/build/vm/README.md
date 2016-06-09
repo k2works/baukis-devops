@@ -1,4 +1,4 @@
-#  開発環境
+#  開発用仮想マシン構築手順
 
 ## 目的
 一貫した開発環境をVMで維持構築する
@@ -7,6 +7,7 @@
 | ソフトウェア     | バージョン    | 備考         |
 |:---------------|:-------------|:------------|
 | vagrant        | 1.7.4        |             |
+| chef-dk        | 0.14.25      |             |
 
 ## 構成
 + プロビジョニング
@@ -14,6 +15,18 @@
 + リリース
 
 ## 詳細
+### Vagrantのインストール
+https://www.vagrantup.com/
+
+### Chef-dkのインストール
+https://downloads.chef.io/chef-dk/
+
+### Vagrantセットアップ
+```
+$ vagrant plugin install vagrant-berkshelf
+$ vagrant plugin install vagrant-omnibus
+$ vagrant plugin install vagrant-chef-zero
+```
 
 ### プロビジョニング
 ```
@@ -28,28 +41,14 @@ $ vagrant sandbox on
 $ vagrant sandbox commit
 ```
 
-1. GoogleChromeをインストールする
-1. Emacsをインストールする
-```
-$ curl -fsSkL https://raw.github.com/rejeep/evm/master/go | bash
-$ echo 2.3.0 > /home/vagrant/.evm/.ruby-version
-$ sudo mkdir /usr/local/evm
-$ sudo chown $USER: /usr/local/evm
-$ evm install emacs-24.5
-$ evm use emacs-24.5
-$ git clone https://github.com/k2works/emacs-env.git
-$ cp -r emacs-env/emacs24 .emacs.d
-$ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-$ cd .emacs.d/
-$ cask install
-```
-
 ### リリース
 ```
 $ ./create_box.sh
 ```
 
+### 備考
+リリース初回時に`vagrant plugin install vagrant-exec`でプラグインを追加する。
+共有フォルダのマウントに失敗する場合は`vagrant plugin install vagrant-vbguest`でプラグインを追加する。
+
 ## 参照
-+ [俺のEmacs](https://github.com/k2works/emacs-env)
-+ [rejeep/evm](https://github.com/rejeep/evm)
-+ [cask/cask](https://github.com/cask/cask)
++ [Vagrant と Chef による仮想環境構築の自動化（VirtualBox編）](https://www.ogis-ri.co.jp/otc/hiroba/technical/vagrant-chef/chap1.html)

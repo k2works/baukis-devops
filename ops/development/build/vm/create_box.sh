@@ -2,7 +2,6 @@
 
 set -e
 
-#共有フォルダのマウントに失敗する場合はvagrant plugin install vagrant-vbguest
 #export PACKER_LOG=1
 rm dev-env.box || true
 #エラー時はvagrant plugin install vagrant-exec

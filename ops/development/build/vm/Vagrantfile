@@ -22,6 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.omnibus.chef_version = :latest
   config.vm.provision "chef_zero" do |chef|
+     chef.nodes_path = "cookbooks"
      chef.cookbooks_path = ["./", "./cookbooks", "./site-cookbooks"]
      chef.add_recipe "dev-env"
   end

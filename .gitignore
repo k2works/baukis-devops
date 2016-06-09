@@ -92,3 +92,4 @@ fabric.properties
 .idea/
 ops/development/build/docker/container/app/tmp/
 *.box
+vagrant-*.json
