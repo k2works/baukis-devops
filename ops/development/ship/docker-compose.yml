@@ -15,16 +15,16 @@ services:
       - RAILS_ENV=development
     volumes:
       - .:/usr/src/app
-      - ./ops/development/docker/container/app/config/secrets.yml:/usr/src/app/config/secrets.yml
-      - ./ops/development/docker/container/app/config/database.yml:/usr/src/app/config/database.yml
-      - ./ops/development/docker/container/app/tmp/pids:/usr/src/app/tmp/pids
+      - ./ops/development/build/docker/container/app/config/secrets.yml:/usr/src/app/config/secrets.yml
+      - ./ops/development/build/docker/container/app/config/database.yml:/usr/src/app/config/database.yml
+      - ./ops/development/build/docker/container/app/tmp/pids:/usr/src/app/tmp/pids
     ports:
       - "3000:3000"
   proxy:
     image: proxy:development
     volumes:
-      - ./ops/development/docker/container/proxy/nginx.conf:/etc/nginx/nginx.conf
-      - ./ops/development/docker/container/proxy/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./ops/development/build/docker/container/proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ./ops/development/build/docker/container/proxy/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8080:80"
     depends_on:

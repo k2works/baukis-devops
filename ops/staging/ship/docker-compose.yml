@@ -17,15 +17,15 @@ services:
       - SECRET_KEY_BASE=483439d1ec14f14bda2236b659b6e0eb6091e81ab15fb7a156b3098e3d6daafa6b7f4aa19083e0b29bcf865f0a81e76ea833001c811694b50152f3e3ef91bb5d
       - APP_DATABASE_PASSWORD=password
     volumes:
-      - ./ops/staging/docker/container/app/config/secrets.yml:/usr/src/app/config/secrets.yml
-      - ./ops/staging/docker/container/app/config/database.yml:/usr/src/app/config/database.yml
-      - ./ops/staging/docker/container/app/config/environments/staging.rb:/usr/src/app/config/staging.rb
+      - ./ops/staging/build/docker/container/app/config/secrets.yml:/usr/src/app/config/secrets.yml
+      - ./ops/staging/build/docker/container/app/config/database.yml:/usr/src/app/config/database.yml
+      - ./ops/staging/build/docker/container/app/config/environments/staging.rb:/usr/src/app/config/staging.rb
       - ./log/:/usr/src/app/log/
   proxy:
     image: k2works/baukis-devops-proxy:latest
     volumes:
-      - ./ops/staging/docker/container/proxy/nginx.conf:/etc/nginx/nginx.conf
-      - ./ops/staging/docker/container/proxy/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./ops/staging/build/docker/container/proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ./ops/staging/build/docker/container/proxy/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8080:80"
     depends_on:
