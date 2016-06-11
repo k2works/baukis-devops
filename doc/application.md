@@ -20,8 +20,15 @@
 ## <a name="1">全体概要</a>
 ### 全体像
 ### レイヤー構造
++ モデル
++ コントローラ
++ ビュー
++ サービス
+
 ### 処理構造
 + ルーティングの基礎知識
++ モデルプレゼンター
++ フォームプレゼンター
 
 ## <a name="2">共通設計指針</a>
 ### 設計クラス
@@ -30,6 +37,8 @@
 + フォームオブジェクト
 + paramsオブジェクト
 + フラッシュオブジェクト
++ Errorsオブジェクト
+
 ### メッセージリソース、定数
 #### デザイン
 + SCSSパーシャル
@@ -50,9 +59,13 @@
 ### セキュリティ
 + [config/secrets.ymlとシークレットキーベース](../config/secrets.yml)・・・外部APIのキーなど秘密データをここに記述する。
 + [ハッシュ関数](../app/models/concerns/password_holder.rb)
++ String Parameters
 ### 初期化
 + [シードデータの投入](../db/seeds.rb)
++ モデルオブジェクトの正規化とバリデーション
 ### 国際化
++ rails-i18n
+
 ### 日付処理
 ### 帳票出力
 ### 固定長データ・ファイルの扱い
@@ -66,6 +79,8 @@
   + [CSSファイル](../app/assets/stylesheets)
   + [レイアウトファイル](../app/views/layouts)
   + [アプリケーションコントローラ](../app/controllers/application_controller.rb)
++ ページネーション
++ HtmlBuilder
 
 ## <a name="4">処理パターン固有指針</a>
 ### Web固有
